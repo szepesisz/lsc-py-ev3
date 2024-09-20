@@ -9,6 +9,8 @@ pretty easy to use. So the other value of this demo is to test your color square
 Author: David Fisher.
 """
 
+import paho
+
 import ev3dev.ev3 as ev3
 import time
 
@@ -35,11 +37,12 @@ def main():
     # From http://python-ev3dev.readthedocs.io/en/latest/sensors.html#special-sensor-classes
 
     last_color_spoken = 0  # No color name has been spoken.
-
+    print('asd')
     touch_sensor = ev3.TouchSensor()
     assert touch_sensor
 
     while not touch_sensor.is_pressed:
+        print('sup?')
         current_color = color_sensor.color
         if current_color == ev3.ColorSensor.COLOR_NOCOLOR:
             last_color_spoken = current_color  # Clear the saved value
@@ -64,3 +67,5 @@ def main():
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
+
+main()
