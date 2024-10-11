@@ -102,14 +102,44 @@ def task_7():
 
 def task_8():
     while True:
-        d = 40
-        dist_diff = min((dist_sensor.distance() - d) / d, 1)
+        d = 30
+        # dist_diff = min((dist_sensor.distance() - d) / d, 1)
+
+        dist_diff = (dist_sensor.distance() - d) / d
+
         print(dist_diff)
-        robot.drive(100 * dist_diff, 0)
+        if dist_diff > 1:
+            robot.drive(0, 0)
+        else:
+            robot.drive(200 * dist_diff, 0)
         wait(10)
 
 
+import threading
 
+def task_9():
+    d = 30
+
+
+    dist_diff = 1
+
+    def set_dd():
+        nonlocal dist_diff
+        while True:
+            dist_diff = (dist_sensor.distance() - d) / d
+            wait(10)
+
+    t = threading.Thread(target=set_dd)
+    t.start()
+    
+    while True:
+        print(dist_diff)
+        if dist_diff > 1:
+            robot.drive(0, 0)
+        else:
+            robot.drive(100 * dist_diff, 0)
+        wait(10)
+        
 if __name__ == '__main__':
     import sys
     tn = sys.argv[1]
